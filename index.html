@@ -1,0 +1,269 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta name="theme-color" content="#1b2838">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samata — Fair Trip Splitting &amp; Group Accounting</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .tabular-nums { font-variant-numeric: tabular-nums; }
+        .cloud-bg {
+            background: radial-gradient(circle at top right, #182a42 0%, #122136 45%, #0b1522 100%);
+        }
+        .glass-card {
+            background: rgba(18, 33, 54, 0.86);
+            backdrop-filter: blur(16px);
+            border: 1px solid #253c59;
+        }
+        .glass-elevated {
+            background: rgba(24, 42, 66, 0.92);
+            backdrop-filter: blur(16px);
+            border: 1px solid #253c59;
+        }
+        .creator-glow {
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0b1522; }
+        ::-webkit-scrollbar-thumb { background: #253c59; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+    </style>
+</head>
+<body class="cloud-bg text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-sky-400/30 selection:text-sky-200">
+
+    <!-- =====================================================================
+         1. WELCOME & AUTHENTICATION LANDING VIEW (User ID & Password Only)
+    ====================================================================== -->
+    <section id="authView" class="flex-1 flex flex-col">
+        <div class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-10 flex flex-col justify-center gap-10">
+
+            <!-- Top Grid: Auth Card + Brand Intro -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+                <!-- Left: Brand Pitch & Highlights -->
+                <div class="lg:col-span-6 space-y-5 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-3">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#182a42] to-[#0b1522] border border-[#253c59] flex items-center justify-center shadow-lg shadow-sky-950/60">
+                            <!-- Custom Modified ISKCON-Inspired Tilak & Lotus Emblem -->
+                            <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Samata Logo">
+                                <circle cx="50" cy="50" r="44" stroke="url(#haloG)" stroke-width="1.6" stroke-dasharray="4 3" opacity="0.7"/>
+                                <line x1="15" y1="67" x2="33" y2="67" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round"/>
+                                <line x1="67" y1="67" x2="85" y2="67" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round"/>
+                                <circle cx="19" cy="67" r="2.3" fill="#38bdf8"/>
+                                <circle cx="81" cy="67" r="2.3" fill="#38bdf8"/>
+                                <path d="M50 84 C34 84 22 73 18 59 C30 62 41 68 50 77 C59 68 70 62 82 59 C78 73 66 84 50 84 Z" fill="url(#lotusG)"/>
+                                <path d="M50 79 C38 72 29 61 31 48 C40 54 46 62 50 71 C54 62 60 54 69 48 C71 61 62 72 50 79 Z" fill="#38bdf8" opacity="0.32"/>
+                                <path d="M43 20 C43 35 45 50 50 63 C55 50 57 35 57 20 C54 31 52 44 50 54 C48 44 46 31 43 20 Z" fill="url(#tilakG)"/>
+                                <path d="M50 11 C53 19 53.5 26 50 32.5 C46.5 26 47 19 50 11 Z" fill="#fde68a"/>
+                                <circle cx="50" cy="68" r="3" fill="#f8fafc"/>
+                                <defs>
+                                    <linearGradient id="haloG" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#f59e0b"/>
+                                        <stop offset="1" stop-color="#38bdf8"/>
+                                    </linearGradient>
+                                    <linearGradient id="lotusG" x1="18" y1="59" x2="82" y2="84" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#38bdf8"/>
+                                        <stop offset="0.5" stop-color="#f59e0b"/>
+                                        <stop offset="1" stop-color="#38bdf8"/>
+                                    </linearGradient>
+                                    <linearGradient id="tilakG" x1="50" y1="20" x2="50" y2="63" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#fef3c7"/>
+                                        <stop offset="1" stop-color="#f59e0b"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-white">Samata</h1>
+                            <p class="text-xs font-bold uppercase tracking-widest text-[#38bdf8]">Fair Trip Splitting &amp; Group Accounting</p>
+                        </div>
+                    </div>
+
+                    <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-100 leading-snug">
+                        Split trip bills in seconds—<span class="text-[#38bdf8]">zero calculator stress</span>, total harmony.
+                    </h2>
+                    <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Enter an expense like <strong class="text-white">₹1,400 for Hotel</strong>, split by Percentage or <code class="text-[#38bdf8] font-bold">p/q</code> ratio (<code class="text-[#f59e0b] font-bold">1/3 = ₹467</code>), record partial payments like <strong class="text-[#10b981]">₹300</strong> in one tap, and track Assets, Liabilities, Expenses &amp; Income permanently.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-2.5 max-w-md mx-auto lg:mx-0 pt-1">
+                        <div class="glass-card rounded-2xl p-3 text-center">
+                            <p class="text-lg font-extrabold text-[#38bdf8] tabular-nums">&lt;3s</p>
+                            <p class="text-[11px] text-slate-400">Live Sync</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-3 text-center">
+                            <p class="text-lg font-extrabold text-[#f59e0b] tabular-nums">% / p/q</p>
+                            <p class="text-[11px] text-slate-400">Smart Splits</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-3 text-center">
+                            <p class="text-lg font-extrabold text-[#10b981] tabular-nums">100%</p>
+                            <p class="text-[11px] text-slate-400">Permanent Data</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: 2-Tab Auth Card (Log In / Sign Up) -->
+                <div class="lg:col-span-6 w-full max-w-md mx-auto">
+                    <div class="glass-elevated rounded-3xl shadow-2xl shadow-black/60 p-6 sm:p-7">
+                        <!-- 2-Tab Switcher -->
+                        <div class="grid grid-cols-2 gap-1.5 bg-[#0b1522] p-1.5 rounded-2xl border border-[#253c59] mb-5">
+                            <button id="tabLoginBtn" type="button" class="py-2.5 rounded-xl text-sm font-bold bg-[#38bdf8] text-[#0b1522] shadow transition-all">
+                                Log In
+                            </button>
+                            <button id="tabSignupBtn" type="button" class="py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-white transition-all">
+                                Sign Up
+                            </button>
+                        </div>
+
+                        <!-- LOG IN FORM (User ID + Password) -->
+                        <form id="loginForm" class="space-y-4">
+                            <div>
+                                <label for="loginUserId" class="block text-xs font-semibold text-slate-300 mb-1.5">User ID</label>
+                                <input id="loginUserId" type="text" required autocomplete="username" placeholder="e.g., nityanand_01"
+                                    class="w-full px-4 py-3 rounded-xl bg-[#0b1522] border border-[#253c59] text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#38bdf8]/60 focus:border-[#38bdf8]">
+                            </div>
+                            <div>
+                                <label for="loginPassword" class="block text-xs font-semibold text-slate-300 mb-1.5">Password</label>
+                                <div class="relative">
+                                    <input id="loginPassword" type="password" required autocomplete="current-password" placeholder="Enter your password"
+                                        class="w-full px-4 py-3 pr-11 rounded-xl bg-[#0b1522] border border-[#253c59] text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#38bdf8]/60 focus:border-[#38bdf8]">
+                                    <button type="button" data-toggle-pw="loginPassword" class="toggle-pw-btn absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#38bdf8] p-1" aria-label="Toggle password visibility">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p id="loginErrorMsg" class="hidden text-xs text-[#f43f5e] bg-rose-500/10 border border-rose-500/30 rounded-xl px-3 py-2"></p>
+                            <button type="submit" id="loginSubmitBtn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#38bdf8] to-sky-400 hover:from-sky-300 hover:to-[#38bdf8] text-[#0b1522] font-bold text-sm shadow-lg shadow-sky-900/40 transition-all active:scale-[0.99]">
+                                Log In to Samata
+                            </button>
+                            <p class="text-[11px] text-center text-slate-400">
+                                Logging out never deletes your groups or ledger. Log back in anytime with your User ID &amp; Password.
+                            </p>
+                        </form>
+
+                        <!-- SIGN UP FORM (4 Required Fields: Name, Unique User ID, Strong Password, City) -->
+                        <form id="signupForm" class="hidden space-y-3.5">
+                            <div>
+                                <label for="signupName" class="block text-xs font-semibold text-slate-300 mb-1">1. Name (First name is enough)</label>
+                                <input id="signupName" type="text" required minlength="2" maxlength="30" placeholder="e.g., Nityanand"
+                                    class="w-full px-4 py-2.5 rounded-xl bg-[#0b1522] border border-[#253c59] text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#38bdf8]/60">
+                            </div>
+
+                            <div>
+                                <label for="signupUserId" class="block text-xs font-semibold text-slate-300 mb-1">2. User ID (Unique for everyone)</label>
+                                <input id="signupUserId" type="text" required minlength="3" maxlength="24" placeholder="e.g., nityanand_01"
+                                    class="w-full px-4 py-2.5 rounded-xl bg-[#0b1522] border border-[#253c59] text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#38bdf8]/60">
+                                <p id="userIdCheckStatus" class="hidden text-[11px] mt-1 font-semibold"></p>
+                            </div>
+
+                            <div>
+                                <label for="signupPassword" class="block text-xs font-semibold text-slate-300 mb-1">3. Password</label>
+                                <div class="relative">
+                                    <input id="signupPassword" type="password" required placeholder="More than 8 chars (A-Z, a-z, 0-9)"
+                                        class="w-full px-4 py-2.5 pr-11 rounded-xl bg-[#0b1522] border border-[#253c59] text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#38bdf8]/60">
+                                    <button type="button" data-toggle-pw="signupPassword" class="toggle-pw-btn absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#38bdf8] p-1" aria-label="Toggle password visibility">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    </button>
+                                </div>
+                                <!-- Live 4-Item Password Validation Indicator -->
+                                <div class="grid grid-cols-2 gap-1.5 mt-2 text-[11px]">
+                                    <span id="pwRuleLen" class="px-2 py-1 rounded-lg bg-[#0b1522] border border-[#253c59] text-slate-400">○ &gt; 8 characters</span>
+                                    <span id="pwRuleUpper" class="px-2 py-1 rounded-lg bg-[#0b1522] border border-[#253c59] text-slate-400">○ Uppercase A-Z</span>
+                                    <span id="pwRuleLower" class="px-2 py-1 rounded-lg bg-[#0b1522] border border-[#253c59] text-slate-400">○ Lowercase a-z</span>
+                                    <span id="pwRuleNum" class="px-2 py-1 rounded-lg bg-[#0b1522] border border-[#253c59] text-slate-400">○ Number 0-9</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="signupCity" class="block text-xs font-semibold text-slate-300 mb-1">4. City where you live</label>
+                                <input id="signupCity" type="text" required minlength="2" maxlength="40" placeholder="e.g., Kolkata, Vrindavan, Mumbai"
+                                    class="w-full px-4 py-2.5 rounded-xl bg-[#0b1522] border border-[#253c59] text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#38bdf8]/60">
+                            </div>
+
+                            <p id="signupErrorMsg" class="hidden text-xs text-[#f43f5e] bg-rose-500/10 border border-rose-500/30 rounded-xl px-3 py-2"></p>
+
+                            <button type="submit" id="signupSubmitBtn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#38bdf8] to-sky-400 hover:from-sky-300 hover:to-[#38bdf8] text-[#0b1522] font-bold text-sm shadow-lg shadow-sky-900/40 transition-all active:scale-[0.99]">
+                                Create Samata Account
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HAPPY MOMENTS WITH SAMATA — 4 Full-Color Custom Inline SVG Scenes -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between flex-wrap gap-2">
+                    <div>
+                        <h3 class="font-display text-lg sm:text-xl font-extrabold text-white">Happy Moments with Samata</h3>
+                        <p class="text-xs text-slate-400">See how friends stay smiling &amp; stress-free on every trip</p>
+                    </div>
+                    <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-500/15 text-[#f59e0b] border border-amber-400/30">
+                        4 Real Trip Stories
+                    </span>
+                </div>
+                <div id="landingGalleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+            </div>
+        </div>
+
+        <!-- Auth Footer with Discreet "Check Data" Owner Portal Trigger -->
+        <footer class="border-t border-[#253c59] bg-[#0b1522]/80 py-4 px-4">
+            <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
+                <p>Samata • Harmony &amp; Fair Equality in Every Trip</p>
+                <button type="button" class="open-owner-portal-btn text-[11px] font-semibold text-slate-500 hover:text-[#f59e0b] transition-colors px-2 py-1 rounded-lg">
+                    Check Data
+                </button>
+            </div>
+        </footer>
+    </section>
+
+    <!-- =====================================================================
+         2. MAIN APPLICATION SHELL (Logged-In Experience)
+    ====================================================================== -->
+    <div id="appShell" class="hidden flex-1 flex flex-col">
+
+        <!-- Sticky Top Header -->
+        <header class="sticky top-0 z-30 bg-[#0b1522]/90 backdrop-blur-xl border-b border-[#253c59]">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
+                <!-- Brand -->
+                <button id="navHomeBtn" type="button" class="flex items-center gap-2.5 text-left group">
+                    <div class="w-9 h-9 rounded-xl bg-[#182a42] border border-[#253c59] flex items-center justify-center group-hover:border-[#38bdf8] transition-colors">
+                        <svg class="w-6 h-6" viewBox="0 0 100 100" fill="none">
+                            <path d="M50 84 C34 84 22 73 18 59 C30 62 41 68 50 77 C59 68 70 62 82 59 C78 73 66 84 50 84 Z" fill="#38bdf8"/>
+                            <path d="M43 20 C43 35 45 50 50 63 C55 50 57 35 57 20 C54 31 52 44 50 54 C48 44 46 31 43 20 Z" fill="#f59e0b"/>
+                            <path d="M50 11 C53 19 53.5 26 50 32.5 C46.5 26 47 19 50 11 Z" fill="#fef3c7"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-display text-lg font-extrabold tracking-tight text-white block leading-none">Samata</span>
+                        <span id="syncModeLabel" class="text-[10px] font-medium text-[#10b981] flex items-center gap-1 mt-0.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
+                            Live Sync &lt;3s
+                        </span>
+                    </div>
+                </button>
+
+                <!-- Right Controls -->
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button id="openStori
